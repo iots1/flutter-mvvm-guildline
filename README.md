@@ -118,71 +118,97 @@ features/
 
 ```
 lib/
-├── main.dart
+├── main.dart                      # จุดเริ่มต้นของแอป, ตั้งค่า Dependency Injection (MultiProvider)
 │
-├── core/
-│   ├── constants/
+├── core/                          # ส่วนกลางที่ใช้ร่วมกันทุก Feature (Global, Cross-cutting Concerns)
+│   ├── constants/                 # ค่าคงที่ทั่วแอป (API Endpoints, etc.)
 │   │   └── api_constants.dart
-│   ├── error/
+│   ├── error/                     # การจัดการข้อผิดพลาด (Custom Exceptions, Failures)
 │   │   ├── exceptions.dart
 │   │   └── failures.dart
-│   ├── network/
+│   ├── network/                   # การจัดการเครือข่าย (Dio client, Interceptors)
 │   │   └── http_service.dart
-│   ├── theme/
+│   ├── theme/                     # การกำหนด Theme และ UI Guidelines
 │   │   ├── app_colors.dart
 │   │   ├── app_dimensions.dart
 │   │   └── app_theme.dart
-│   ├── utils/
-│   │   ├── app_local_storage.dart
+│   ├── utils/                     # Utility functions, Local Storage
+│   │   └── app_local_storage.dart
 │   │   └── app_preferences_keys.dart
-│   └── widgets/
+│   └── widgets/                   # UI Components ที่ใช้ซ้ำได้ทั่วแอป (Global Reusable Widgets)
 │       ├── app_button.dart
 │       └── app_text_form_field.dart
 │
-├── features/
-│   ├── auth/
-│   │   ├── data/
-│   │   │   ├── datasources/remote/auth_remote_data_source.dart
-│   │   │   └── models/user_credential_model.dart
-│   │   ├── domain/
-│   │   │   ├── entities/user_credential_entity.dart
-│   │   │   ├── repositories/auth_repository.dart
-│   │   │   └── usecases/sign_in_usecase.dart
-│   │   └── presentation/
-│   │       ├── screens/login_screen.dart
-│   │       ├── view_models/login_view_model.dart
+├── features/                      # แต่ละโฟลเดอร์คือ 1 Feature ที่ทำงานแยกกันอย่างอิสระ
+│   ├── auth/                      # ฟีเจอร์: การยืนยันตัวตน (Login, Register)
+│   │   ├── data/                  # Data Layer สำหรับ Auth Feature
+│   │   │   ├── datasources/
+│   │   │   │   └── remote/
+│   │   │   │       └── auth_remote_data_source.dart
+│   │   │   └── models/
+│   │   │       └── user_credential_model.dart
+│   │   └── domain/                # Domain Layer สำหรับ Auth Feature
+│   │   │   ├── entities/
+│   │   │   │   └── user_credential_entity.dart
+│   │   │   ├── repositories/
+│   │   │   │   └── auth_repository.dart
+│   │   │   └── usecases/
+│   │   │       ├── sign_in_usecase.dart
+│   │   │       └── sign_up_usecase.dart
+│   │   └── presentation/          # Presentation Layer สำหรับ Auth Feature
+│   │       ├── screens/
+│   │       │   └── login_screen.dart
+│   │       ├── view_models/
+│   │       │   └── login_view_model.dart
 │   │       └── widgets/
 │   │
-│   ├── home/
-│   │   └── presentation/screens/home_screen.dart
-│   │   └── presentation/view_models/home_view_model.dart
-│   │
-│   ├── notification/
-│   │   ├── domain/entities/notification_entity.dart
-│   │   └── domain/usecases/
-│   │       ├── get_notifications_usecase.dart
-│   │       └── mark_notification_as_read_usecase.dart
+│   ├── home/                      # ฟีเจอร์: หน้าหลัก
+│   │   ├── data/
+│   │   ├── domain/
 │   │   └── presentation/
-│   │       ├── screens/notification_screen.dart
-│   │       └── view_models/notification_view_model.dart
+│   │       ├── screens/
+│   │       │   └── home_screen.dart
+│   │       └── view_models/
+│   │           └── home_view_model.dart
 │   │
-│   └── profile/
+│   ├── notification/              # ฟีเจอร์: การแจ้งเตือน
+│   │   ├── data/
+│   │   ├── domain/
+│   │   │   ├── entities/
+│   │   │   │   └── notification_entity.dart
+│   │   │   └── usecases/
+│   │   │       ├── get_notifications_usecase.dart
+│   │   │       └── mark_notification_as_read_usecase.dart
+│   │   └── presentation/
+│   │       ├── screens/
+│   │       │   └── notification_screen.dart
+│   │       └── view_models/
+│   │           └── notification_view_model.dart
+│   │
+│   └── profile/                   # ฟีเจอร์: โปรไฟล์ผู้ใช้
 │       ├── data/
-│       │   ├── datasources/remote/user_profile_remote_data_source.dart
-│       │   └── models/user_profile_model.dart
+│       │   ├── datasources/
+│       │   │   └── remote/
+│       │   │       └── user_profile_remote_data_source.dart
+│       │   └── models/
+│       │       └── user_profile_model.dart
 │       ├── domain/
-│       │   ├── entities/user_profile_entity.dart
-│       │   ├── repositories/user_profile_repository.dart
+│       │   ├── entities/
+│       │   │   └── user_profile_entity.dart
+│       │   ├── repositories/
+│       │   │   └── user_profile_repository.dart
 │       │   └── usecases/
 │       │       ├── get_user_profile_usecase.dart
 │       │       └── update_user_profile_usecase.dart
 │       └── presentation/
-│           ├── screens/user_profile_screen.dart
-│           ├── view_models/user_profile_view_model.dart
+│           ├── screens/
+│           │   └── user_profile_screen.dart
+│           ├── view_models/
+│           │   └── user_profile_view_model.dart
 │           └── widgets/
 │
-└── providers/
-    ├── app_providers.dart
-    ├── core_providers.dart
-    └── feature_providers.dart
+└── providers/                     # การจัดการ Dependency Injection (รวม Providers จากทุก Feature)
+    ├── app_providers.dart         # รวม providers ทั้งหมดเข้าด้วยกัน
+    ├── core_providers.dart        # Providers ของ Core Layer
+    └── feature_providers.dart     # Providers ของทุก Feature
 ```
